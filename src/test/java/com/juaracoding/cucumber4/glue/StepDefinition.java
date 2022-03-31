@@ -58,7 +58,7 @@ public class StepDefinition {
 	public void getResult(Scenario scenario) throws IOException {
 		if(scenario.isFailed()) {
 			String screeshotPath = Utils.getScreenshot(driver, scenario.getName().replace(" ", "_"));
-			extentTest.log(LogStatus.FAIL, "Screeshot:\n"+
+			extentTest.log(LogStatus.FAIL, "Screenshot:\n"+
 					extentTest.addScreencast(screeshotPath));
 		}
 	}
