@@ -18,15 +18,26 @@ private WebDriver driver;
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(xpath = "//*[@id=\\\"fadein\\\"]/div[1]/div/div[3]/ul/li[4]/a")
-	WebElement btnProfilePage;
+	@FindBy(css = "document.querySelector(\"#fadein > div.sidebar-nav > div > div.sidebar-menu-wrap > ul\")")
+	List<WebElement> btnProfilePage;
 	
 	public void goToMenuProfile() {
-		btnProfilePage.click();
+		tunggu();
+		driver.navigate().refresh();
+		btnProfilePage.get(3).click();
 	}
 	
 	public String getTxtTitleProfile() {
 		return driver.getTitle();
+	}
+	
+	public void tunggu() {
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
