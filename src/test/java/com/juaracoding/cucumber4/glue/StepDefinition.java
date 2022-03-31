@@ -13,6 +13,7 @@ import com.juaracoding.cucumber4.config.AutomationFrameworkConfig;
 import com.juaracoding.cucumber4.drivers.DriverSingleton;
 import com.juaracoding.cucumber4.pages.BookingPage;
 import com.juaracoding.cucumber4.pages.LoginPage;
+import com.juaracoding.cucumber4.pages.ProfilePage;
 import com.juaracoding.cucumber4.utlis.ConfigurationProperties;
 import com.juaracoding.cucumber4.utlis.Constants;
 import com.juaracoding.cucumber4.utlis.TestCases;
@@ -38,6 +39,7 @@ public class StepDefinition {
 	private static WebDriver driver;
 	private LoginPage loginPage;
 	private BookingPage bookingPage;
+	private ProfilePage profilePage;
 	ExtentTest extentTest;
 	static ExtentReports reports = new ExtentReports("src/main/resources/TestReport.html");
 	
@@ -49,6 +51,7 @@ public class StepDefinition {
 		DriverSingleton.getInstance(configurationProperties.getBrowser());
 		loginPage = new LoginPage();
 		bookingPage = new BookingPage();
+		profilePage = new ProfilePage();
 		TestCases[] tests = TestCases.values();
 		extentTest = reports.startTest(tests[Utils.testCount].getTestName());
 		Utils.testCount++;
@@ -107,7 +110,20 @@ public class StepDefinition {
 	public void customer_melihat_page_title() {
 		assertEquals(configurationProperties.getTxtTitleBookingPage(), bookingPage.getTxtTitleBookingPage());
 		extentTest.log(LogStatus.PASS, "Customer melihat page title");
-	}	
+	}
+	
+	@When("Customer berada dihalaman Profile")
+	public void customer_berada_dihalaman_Profile() {
+		profilePage.goToMenuProfile();
+		extentTest.log(LogStatus.PASS, "Customer berada dihalaman Profile");
+	}
+	
+	@Then("Customer berhasil mendapatkan Form Profile")
+	public void  customer_berhasil_mendapatkan_Form_Profile() {
+		assertEquals(configurationProperties.getTxtTitleProfile(), profilePage.getTxtTitleProfile());
+		extentTest.log(LogStatus.PASS, "Customer berhasil mendapatkan Form Profile");
+	}
+	
 	
 	public void tunggu() {
 		try {
