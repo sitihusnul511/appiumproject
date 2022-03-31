@@ -2,6 +2,8 @@ package com.juaracoding.cucumber4.glue;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,9 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
+import io.cucumber.java.AfterStep;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -48,6 +52,15 @@ public class StepDefinition {
 		TestCases[] tests = TestCases.values();
 		extentTest = reports.startTest(tests[Utils.testCount].getTestName());
 		Utils.testCount++;
+	}
+	
+	@AfterStep
+	public void getResult(Scenario scenario) throws IOException {
+		if(scenario.isFailed()) {
+			String screeshotPath = Utils.getScreenshot(driver, scenario.getName().replace(" ", "_"));
+			extentTest.log(LogStatus.FAIL, "Screeshot:\n"+
+					extentTest.addScreencast(screeshotPath));
+		}
 	}
 	
 	@After
