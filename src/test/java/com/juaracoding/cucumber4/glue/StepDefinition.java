@@ -55,11 +55,11 @@ public class StepDefinition {
 	}
 	
 	@AfterStep
-	public void getResult(Scenario scenario) throws IOException {
+	public void getResult(Scenario scenario) throws Exception {
 		if(scenario.isFailed()) {
 			String screeshotPath = Utils.getScreenshot(driver, scenario.getName().replace(" ", "_"));
-			extentTest.log(LogStatus.FAIL, "Screeshot:\n"+
-					extentTest.addScreencast(screeshotPath));
+			extentTest.log(LogStatus.FAIL, "Screenshot:\n"+
+					extentTest.addScreenCapture(screeshotPath));
 		}
 	}
 	
